@@ -1,0 +1,24 @@
+{
+  "name": "Base11-GUI",
+  "version": "1.0.0",
+  "description": "This repository will house the code for the Base-11 telemetry dashboard.",
+  "main": "like_button.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/agupta01/Base11-GUI.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/agupta01/Base11-GUI/issues"
+  },
+  "homepage": "https://github.com/agupta01/Base11-GUI#readme",
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-react-app": "^3.1.2"
+  }
+}

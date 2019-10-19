@@ -9,18 +9,20 @@ function constUpdate() {
     width: "1440px",
     color: "#FFFFFF",
     borderRadius: "0px",
-    fontFamily: "Arial",
+    fontFamily: "Helvetica",
   };
 
   const element = (
     <div style={headerStyle}>
-      <span style={{textAlign: "right", float: "right", paddingRight: "20px", marginTop: "20px"}}>
+      <span style={{textAlign: "right", float: "right", paddingRight: "20px", marginTop: "20px", fontSize: "14px"}}>
         {new Date().getMonth()}/{new Date().getDay()}/{new Date().getFullYear()} <br></br> {new Date().toLocaleTimeString()} UTC-8
       </span>
-      <span style={{float: "left"}}>
-        <img src="./imgs/RPL-logo.png" height="75px" width="202px"></img>
+      <span style={{float: "left", padding: "5px"}}>
+        <img src="./imgs/RPL-logo.png" height="65px" width="175px"></img>
       </span>
-      <span style={{textAlign: "center", display: "table", margin: "auto", alignContent: "center", paddingTop: "30px", marginTop: "0px"}}>Base-11 Telemetry Dashboard</span>
+      <span style={{textAlign: "center", display: "table", margin: "auto", alignContent: "center", paddingTop: "30px", marginTop: "0px", fontSize: "20px"}}>
+        Base-11 Telemetry Dashboard
+      </span>
     </div>
   );
 

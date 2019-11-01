@@ -12,7 +12,7 @@ function App() {
   return (
     <div>
 			<Header/>
-      <ConnectionStatus connectionStatus="Connected"/>
+      <ConnectionStatus/>
       <FlightStatus/>
       <ChuteStatus/>
       <MapView/>

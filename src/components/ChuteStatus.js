@@ -3,7 +3,8 @@ import React from 'react';
 export default class ChuteStatus extends React.Component {
 
 	divStyle = {
-		marginRight: "45%"
+		marginRight: "45%",
+		marginBottom: "50px"
 	};
 
 	render () {

@@ -11,7 +11,7 @@ function App() {
   return (
     <div>
 			<Header/>
-      <ConnectionStatus/>
+      <ConnectionStatus connectionStatus="Connected"/>
       <FlightStatus/>
       <ChuteStatus/>
       <MapView/>

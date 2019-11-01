@@ -5,6 +5,7 @@ import FlightStatus from './components/FlightStatus';
 import ConnectionStatus from './components/ConnectionStatus';
 import ChuteStatus from './components/ChuteStatus';
 import MapView from './components/MapView';
+import Orientation from './components/Orientation';
 import './App.css';
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
       <FlightStatus/>
       <ChuteStatus/>
       <MapView/>
+      <Orientation/>
 		</div>
   );
 }

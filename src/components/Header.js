@@ -41,7 +41,7 @@ export default class Header extends React.Component {
 		return (
 			<div style={this.headerStyle}>
       			<span style={{textAlign: "right", float: "right", paddingRight: "20px", marginTop: "20px", fontSize: "14px"}}>
-        			{this.state.date.getMonth()}/{this.state.date.getDay()}/{this.state.date.getFullYear()} <br></br> {this.state.date.toLocaleTimeString()} UTC-{this.state.date.getTimezoneOffset() / 60}
+        			{this.state.date.getMonth() + 1}/{this.state.date.getDate()}/{this.state.date.getFullYear()} <br></br> {this.state.date.toLocaleTimeString()} UTC-{this.state.date.getTimezoneOffset() / 60}
       			</span>
       			<span style={{float: "left", padding: "5px"}}>
         			<img src={require("../imgs/RPL-logo.png")} alt="nani the fuck" height="65px" width="175px"></img>

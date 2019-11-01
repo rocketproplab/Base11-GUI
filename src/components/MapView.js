@@ -3,17 +3,17 @@ import { Map, GoogleApiWrapper } from 'google-maps-react';
 
 class MapView extends React.Component {
   mapStyle = {
-    width: "67%"
+    width: "76%",
+    height: "calc(width * 0.613)"
   };
 
   render () {
     return (
     <Map
-          google={this.props.google}
-          zoom={14}
-          style={this.mapStyle}
-          initialCenter={{ lat: 32.881200, lng: -117.237575}}
-        />
+      google={this.props.google}
+      zoom={14}
+      style={this.mapStyle}
+      initialCenter={{ lat: 32.881200, lng: -117.237575}}/>
     );
   }
 }

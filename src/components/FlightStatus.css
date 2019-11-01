@@ -1,0 +1,10 @@
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto auto auto auto auto;
+}
+
+.not-completed {
+  color: 'black';
+  font-size: 30px;
+  text-align: center;
+}

@@ -31,7 +31,7 @@ export default class Header extends React.Component {
     	margin: "0px",
     	padding: "0px",
     	height: "75px",
-    	width: "1440px",
+    	width: "auto",
     	color: "#FFFFFF",
     	borderRadius: "0px",
     	fontFamily: "Helvetica",

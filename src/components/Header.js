@@ -44,7 +44,7 @@ export default class Header extends React.Component {
         			{this.state.date.getMonth() + 1}/{this.state.date.getDate()}/{this.state.date.getFullYear()} <br></br> {this.state.date.toLocaleTimeString()} UTC-{this.state.date.getTimezoneOffset() / 60}
       			</span>
       			<span style={{float: "left", padding: "5px"}}>
-        			<img src={require("../imgs/RPL-logo.png")} alt="nani the fuck" height="65px" width="175px"></img>
+        			<img src={require("../imgs/RPL-logo.png")} height="65px" width="175px"></img>
       			</span>
       			<span style={{textAlign: "center", display: "table", margin: "auto", alignContent: "center", paddingTop: "30px", marginTop: "0px", fontSize: "20px"}}>
         			Base-11 Telemetry Dashboard

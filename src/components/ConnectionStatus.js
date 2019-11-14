@@ -33,7 +33,7 @@ export default class ConnectionStatus extends React.Component {
 	}
 
 	render () {
-		if (this.state.connectionStatus === "1") {
+		if (this.state.connectionStatus == 1) {
 			return (
 				<div style={this.format}>
 					Command Board: <span style={{color: "green"}}>Connected</span>

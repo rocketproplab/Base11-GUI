@@ -8,3 +8,9 @@
   font-size: 30px;
   text-align: center;
 }
+
+.completed {
+  color: 'green';
+  font-size: 30px;
+  text-align: center;
+}

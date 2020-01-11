@@ -14,7 +14,7 @@ export default class ChuteStatus extends React.Component {
 	}
 	divStyle = {
 		marginRight: "42%",
-		marginBottom: "15px"
+		marginBottom: "10px"
 	};
 
 	componentDidMount() {

@@ -3,8 +3,8 @@ import { Map, GoogleApiWrapper } from 'google-maps-react';
 
 class MapView extends React.Component {
   mapStyle = {
-    width: "76%",
-    height: "calc(width * 0.613)"
+    width: "67%",
+    height: "50%"
   };
 
   render () {

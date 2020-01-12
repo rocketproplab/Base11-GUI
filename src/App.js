@@ -33,16 +33,7 @@ function App() {
                     <MapView/>
                 </Grid>
                 <Grid item xs={4}>
-                    <Grid
-                        direction="column"
-                        container spacing={2}>
-                        <Grid item xs={1}>
-                            <Orientation/>
-                        </Grid>
-                        <Grid item xs={1}>
-                            Placeholder
-                        </Grid>
-                    </Grid>
+                    <Orientation/>
                 </Grid>
             </Grid>
 		</div>

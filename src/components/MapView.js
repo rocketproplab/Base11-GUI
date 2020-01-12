@@ -4,7 +4,7 @@ import { Map, GoogleApiWrapper } from 'google-maps-react';
 class MapView extends React.Component {
   mapStyle = {
     width: "67%",
-    height: "50%"
+    height: "auto"
   };
 
   render () {

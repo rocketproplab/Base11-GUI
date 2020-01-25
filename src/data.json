@@ -1,6 +1,6 @@
 {
 	"connectionStatus": 0,
-	"timestamp": 1574453804.354888,
+	"timestamp": 1579386568.630274,
 	"PT1_ss": 0,
 	"PT1_readout": 0,
 	"PT2_ss": 0,
@@ -25,7 +25,7 @@
 	"TC6": 0,
 	"TC7": 0,
 	"TC8": 0,
-	"Alt": 1000,
+	"Alt": 0,
 	"xTilt": 0,
 	"yTilt": 0,
 	"Lat": 0,

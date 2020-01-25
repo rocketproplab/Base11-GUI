@@ -9,21 +9,15 @@ import Container from '@material-ui/core/Container';
 
 const heartbeat = 1000;
 var data = require("../data");
+const writeJsonFile = require('write-json-file');
 
 export default class BasicInfo extends React.Component {
 	constructor(props) {
         super(props);
         this.state = {
-            lat: data.Lat,
-			lon: data.Lon,
 			alt: data.Alt,
-			ts: data.timestamp
+			vel: data.Velocity
         }
-
-		var lat_last = 0;
-		var lon_last = 0;
-		var alt_last = 0;
-		var ts_last = 1574453804.354888;
     }
 
     cardStyle = {
@@ -50,11 +44,6 @@ export default class BasicInfo extends React.Component {
 	}
 
 	tick() {
-		this.lat_last = this.state.lat;
-		this.lon_last = this.state.lon;
-		this.alt_last = this.state.alt;
-		this.ts_last = this.state.ts;
-
 		this.setState({
 			date: new Date()
 		});
@@ -66,18 +55,21 @@ export default class BasicInfo extends React.Component {
 		let lat_step = lat - lat_last;
 		let lon_step = lon - lon_last;
 		let alt_step = alt - alt_last;
+		console.log("Last alt: " + alt_last)
+		console.log("Diff: " + alt_step)
 
 		let root = Math.pow((Math.pow(Math.sin(lat_step / 2), 2) + Math.pow(Math.cos(lat_last)*Math.cos(lat)*(Math.sin(lon_step / 2)), 2)), 0.5);
 		let d = 2*(alt + earth_R)*Math.asin(root);
 
 		return(Math.pow((Math.pow(alt_step, 2) + Math.pow(d, 2)), 0.5))
+		// return(alt_step)
 	}
 
     render () {
 		return (
 			<Card style={this.cardStyle}>
 	            <Typography variant="h5" component="h2" align="left" style={{marginLeft: '3%', marginTop: '4%'}}>
-	                Speed: {this.getSpeed(this.state.lat, this.state.lon, this.state.alt, this.state.ts, this.lat_last, this.lon_last, this.alt_last, this.ts_last)} m/s
+	                Velocity: {this.state.vel} m/s
 	            </Typography>
 				<Typography variant="h5" component="h2" align="left" style={{marginLeft: '3%', marginBottom: '4%'}}>
 	                Altitude: {this.state.alt} m

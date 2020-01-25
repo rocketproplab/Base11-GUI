@@ -12,7 +12,7 @@ import BasicInfo from './components/BasicInfo';
 import './App.css';
 import Grid from '@material-ui/core/Grid';
 
-// TODO: Swap map and valve table
+var persist = window.localStorage
 
 function App() {
     return (

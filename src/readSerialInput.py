@@ -7,6 +7,15 @@ import pandas as pd
 baudRate = 115200
 ser1 = serial.Serial()
 
+prev_alt = 0
+alt = 0
+
+vel = lambda prev_alt, alt : alt - prev_alt
+
+def updateSpeedMetrics(curr_alt):
+    prev_alt = alt
+    alt = curr_alt
+
 def getData():
     text = ser1.readline().strip()
     while str(text[0:4]) != 'b\'PT1:\'':
@@ -16,6 +25,9 @@ def getData():
     print(str(text))
     data = str(text)[2:-1].split(';')
     print(data)
+
+    updateSpeedMetrics(data[16].split(":")[1])
+
     datastore = {
         "connectionStatus": 1,
         "timestamp": time.time(),
@@ -50,7 +62,8 @@ def getData():
         "Lon": data[18].split(":")[1].split(",")[1],
         "FS": data[19].split(":")[1],
         "PS_drogue": data[20].split(":")[1].split(",")[0],
-        "PS_main": data[20].split(":")[1].split(",")[1]
+        "PS_main": data[20].split(":")[1].split(",")[1],
+        "Vel": vel(prev_alt, alt)
     }
     return datastore
 
@@ -109,46 +122,3 @@ while True:
         with open('data.json', 'w') as f:
             json.dump(datastore, f, indent="\t")
     time.sleep(2)
-
-#----------------
-while True:
-    print("Opening comm port " + sys.argv[1])
-    try:
-        ser1 = serial.Serial(sys.argv[1], 115200)
-        connected = True
-    except serial.serialutil.SerialException:
-        print("Command Box not connected!")
-        connected = False
-    if connected:
-        datastore['connectionStatus'] = 1
-        with open('data.json', 'w') as f:
-            json.dump(datastore, f)
-        time.sleep(1)
-    else:
-        datastore['connectionStatus'] = 0
-        with open('data.json', 'w') as f:
-            json.dump(datastore, f)
-        time.sleep(1)
-
-f = open(sys.argv[2],"w+")
-# ​
-print("Files open waiting for arduino ")
-time.sleep(2)
-print("Starting read")
-# ​
-# while True:
-    # get line of telemetry data
-text = ser1.readline().strip()
-while str(text[0:3]) != 'b\'PT1\'':
-    print("failed! string was " + str(text[0:3]))
-    text = ser1.readline().strip()
-# f.write(str(text) + "\n")
-print(str(text))
-data = str(text)[2:].split(';')
-print(data)
-for i in range(len(data)):
-    data[i] = data[i].split(":")
-print(data)
-df = pd.DataFrame(columns=['timestamp', 'PT1_ss', 'PT1_readout', 'PT2_ss', 'PT2_readout', 'PT3_ss', 'PT3_readout', 'PT4_ss', 'PT4_readout',
-                        'PT5_ss', 'PT5_readout', 'PT6_ss', 'PT6_readout', 'PT7_ss', 'PT7_readout', 'PT8_ss', 'PT8_readout',
-                        'TC1', 'TC2', 'TC3', 'TC4', 'TC5', 'TC6', 'TC7', 'TC8', 'Alt', 'xTilt', 'yTilt', 'Lat', 'Lon', 'FS', 'PS_drogue', 'PS_main'])

@@ -70,7 +70,7 @@ export default class Orientation extends React.Component {
                     <Typography variant="h5" component="h2" align="center">
                         Current Orientation
                     </Typography>
-                    <Container style={{padding: "50px 104px"}}>
+                    <Container style={{padding: "50px 25%"}}>
                         <img src={require("../imgs/rocket.png")} height="256px" width="256px" style={{transform: `rotate(${this.getRotation(this.state.xTilt, this.state.yTilt)}deg)`}}></img>
                     </Container>
                     {this.getRotation(this.state.xTilt, this.state.yTilt)} degrees

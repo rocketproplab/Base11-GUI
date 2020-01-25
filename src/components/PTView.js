@@ -95,9 +95,7 @@ export default class PTView extends React.Component {
               <TableBody>
                 {this.rows.map(row => (
                   <TableRow key={row.name}>
-                    <TableCell component="th" scope="row" align="center">
-                      {row.sensor}
-""                    </TableCell>
+                    <TableCell component="th" scope="row" align="center">{row.sensor}</TableCell>
                     <TableCell align="center">{row.ss}</TableCell>
                     <TableCell align="center">{row.readout}</TableCell>
                   </TableRow>

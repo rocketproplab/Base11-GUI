@@ -8,10 +8,11 @@ import MapView from './components/MapView';
 import Orientation from './components/Orientation';
 import PTView from './components/PTView';
 import TCView from './components/TCView';
+import BasicInfo from './components/BasicInfo';
 import './App.css';
 import Grid from '@material-ui/core/Grid';
 
-// TODO: Swap map and valve table
+var persist = window.localStorage
 
 function App() {
     return (
@@ -19,12 +20,21 @@ function App() {
             <Header/>
             <ConnectionStatus/>
             <FlightStatus/>
-            <ChuteStatus/>
+            <div style={{marginLeft: '11px'}}>
+                <Grid container spacing={3}>
+                    <Grid item xs={9}>
+                        <ChuteStatus/>
+                    </Grid>
+                    <Grid item xs={3}>
+                        <BasicInfo/>
+                    </Grid>
+                </Grid>
+            </div>
             <Grid container spacing={3}>
-                <Grid item xs={6}>
+                <Grid item xs={8}>
                     <PTView/>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={4}>
                     <TCView/>
                 </Grid>
             </Grid>

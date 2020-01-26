@@ -32,5 +32,6 @@
 	"Lon": 0,
 	"FS": 0,
 	"PS_drogue": 0,
-	"PS_main": 0
+	"PS_main": 0,
+	"Velocity": 0
 }

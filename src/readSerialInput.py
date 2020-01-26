@@ -2,7 +2,6 @@ import sys
 import serial
 import time
 import json
-import pandas as pd
 
 baudRate = 115200
 ser1 = serial.Serial()
@@ -117,7 +116,8 @@ while True:
             "Lon": 0,
             "FS": 0,
             "PS_drogue": 0,
-            "PS_main": 0
+            "PS_main": 0,
+            "Vel": 0
         }
         with open('data.json', 'w') as f:
             json.dump(datastore, f, indent="\t")

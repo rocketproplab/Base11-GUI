@@ -28,10 +28,10 @@
 	"Alt": 0,
 	"xTilt": 0,
 	"yTilt": 0,
-	"Lat": 0,
-	"Lon": 0,
-	"FS": 0,
-	"PS_drogue": 0,
+	"Lat": 32.881200,
+	"Lon": -117.237575,
+	"FS": 6,
+	"PS_drogue": 1,
 	"PS_main": 0,
 	"Velocity": 0
 }

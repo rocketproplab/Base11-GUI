@@ -9,7 +9,6 @@ import Container from '@material-ui/core/Container';
 
 const heartbeat = 1000;
 var data = require("../data");
-const writeJsonFile = require('write-json-file');
 
 export default class BasicInfo extends React.Component {
 	constructor(props) {

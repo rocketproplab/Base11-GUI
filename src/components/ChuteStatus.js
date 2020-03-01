@@ -7,8 +7,9 @@ export default class ChuteStatus extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			drogueState: data.PS_drogue,
-			mainState: data.PS_main
+			DS: data.PS_drogue,
+			MS: data.PS_main,
+			FS: data.FS
 		}
 
 	}
@@ -33,24 +34,38 @@ export default class ChuteStatus extends React.Component {
 			date: new Date()
 		});
 	}
+	
+	drogueStatus = function(flightState, drogueState) {
+		if (drogueState == 1) {
+			if (flightState <= 4) {
+				return (<p className={"completed"}>Drogue</p>)
+			} else {
+				return (<p className={"completed"} style={{color: 'red'}}>Drogue</p>)
+			}
+		} else {
+			return (<p className={"not-completed"}>Drogue</p>)
+		}
+	}
+	
+	mainStatus = function(flightState, mainState) {
+		if (mainState == 1) {
+			if (flightState <= 5) {
+				return (<p className={"completed"}>Main</p>)
+			} else {
+				return (<p className={"completed"} style={{color: 'red'}}>Main</p>)
+			}
+		} else {
+			return (<p className={"not-completed"}>Main</p>)
+		}
+	}
 
 	render () {
-		if (this.state.drogueState == "1") {
-			return (
-				<div style={this.divStyle} className={'grid-container'}>
-					<p className={"not-completed"}>Parachutes:</p>
-					<p className={"completed"}>Drogue</p>
-					<p className={"not-completed"}>Main</p>
-				</div>
-			);
-		} else {
-			return (
-				<div style={this.divStyle} className={'grid-container'}>
-					<p className={"not-completed"}>Parachutes:</p>
-					<p className={"not-completed"}>Drogue</p>
-					<p className={"not-completed"}>Main</p>
-				</div>
-			);
-		}
+		return (
+			<div style={this.divStyle} className={'grid-container'}>
+				<p className={"not-completed"}>Parachutes:</p>
+				{this.drogueStatus(this.state.FS, this.state.DS)}
+				{this.mainStatus(this.state.FS, this.state.MS)}
+			</div>
+		);	
 	}
 }

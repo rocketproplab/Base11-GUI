@@ -2,19 +2,22 @@ import sys
 import serial
 import time
 import json
-import pandas as pd
 
 baudRate = 115200
 ser1 = serial.Serial()
 
 prev_alt = 0
 alt = 0
+time = 0
+prev_time = 0
 
-vel = lambda prev_alt, alt : alt - prev_alt
+vel = lambda prev_alt, alt, prev_time, time: (alt - prev_alt) / (time - prev_time)
 
-def updateSpeedMetrics(curr_alt):
+def updateSpeedMetrics(curr_alt, curr_time):
     prev_alt = alt
     alt = curr_alt
+    prev_time = time
+    time = curr_time
 
 def getData():
     text = ser1.readline().strip()
@@ -26,7 +29,7 @@ def getData():
     data = str(text)[2:-1].split(';')
     print(data)
 
-    updateSpeedMetrics(data[16].split(":")[1])
+    updateSpeedMetrics(data[16].split(":")[1], time.time())
 
     datastore = {
         "connectionStatus": 1,
@@ -63,7 +66,7 @@ def getData():
         "FS": data[19].split(":")[1],
         "PS_drogue": data[20].split(":")[1].split(",")[0],
         "PS_main": data[20].split(":")[1].split(",")[1],
-        "Vel": vel(prev_alt, alt)
+        "Vel": vel(prev_alt, alt, prev_time, time)
     }
     return datastore
 
@@ -117,7 +120,8 @@ while True:
             "Lon": 0,
             "FS": 0,
             "PS_drogue": 0,
-            "PS_main": 0
+            "PS_main": 0,
+            "Vel": 0
         }
         with open('data.json', 'w') as f:
             json.dump(datastore, f, indent="\t")

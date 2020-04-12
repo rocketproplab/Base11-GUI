@@ -34,5 +34,4 @@ db.close((err) => {
     console.error(err.message);
   }
   console.log('Close the database connection.');
-  console.log(dataEntry);
 });

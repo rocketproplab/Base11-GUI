@@ -4,7 +4,14 @@ import { FormControlProps } from './FormControl';
 // shut off automatic exporting
 export {};
 
-type ContextFromPropsKey = 'disabled' | 'error' | 'hiddenLabel' | 'margin' | 'required' | 'variant';
+type ContextFromPropsKey =
+  | 'disabled'
+  | 'error'
+  | 'fullWidth'
+  | 'hiddenLabel'
+  | 'margin'
+  | 'required'
+  | 'variant';
 
 export interface FormControlState extends Pick<FormControlProps, ContextFromPropsKey> {
   adornedStart: boolean;
@@ -16,4 +23,4 @@ export interface FormControlState extends Pick<FormControlProps, ContextFromProp
   onFocus: () => void;
 }
 
-export default function useFormControl(): FormControlState;
+export default function useFormControl(): FormControlState | undefined;

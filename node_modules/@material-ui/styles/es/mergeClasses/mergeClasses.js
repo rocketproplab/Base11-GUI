@@ -1,7 +1,6 @@
 import _extends from "@babel/runtime/helpers/esm/extends";
 import { getDisplayName } from '@material-ui/utils';
-
-function mergeClasses(options = {}) {
+export default function mergeClasses(options = {}) {
   const {
     baseClasses,
     newClasses,
@@ -38,5 +37,3 @@ function mergeClasses(options = {}) {
   });
   return nextClasses;
 }
-
-export default mergeClasses;

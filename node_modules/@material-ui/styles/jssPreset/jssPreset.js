@@ -5,7 +5,7 @@ var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefau
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports.default = jssPreset;
 
 var _jssPluginRuleValueFunction = _interopRequireDefault(require("jss-plugin-rule-value-function"));
 
@@ -30,6 +30,3 @@ function jssPreset() {
     typeof window === 'undefined' ? null : (0, _jssPluginVendorPrefixer.default)(), (0, _jssPluginPropsSort.default)()]
   };
 }
-
-var _default = jssPreset;
-exports.default = _default;

@@ -93,7 +93,7 @@ function createTypography(palette, typography) {
     htmlFontSize: htmlFontSize,
     pxToRem: pxToRem,
     round: round,
-    // TODO To remove in v5?
+    // TODO v5: remove
     fontFamily: fontFamily,
     fontSize: fontSize,
     fontWeightLight: fontWeightLight,

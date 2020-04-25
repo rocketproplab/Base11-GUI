@@ -1,37 +1,7 @@
-const sqlite3 = require('sqlite3').verbose();
+const fs = require('fs');
+const sql = require('sql.js');
 
-// open the database
-let db = new sqlite3.Database('./data.db', sqlite3.OPEN_READWRITE, (err) => {
-  if (err) {
-    console.error(err.message);
-  }
-  console.log('Connected to the telemetry database.');
-});
-
-var dataEntry = null;
-
-function getData() {
-    db.serialize(() => {
-        db.get(`SELECT * FROM telemetry ORDER BY timestamp DESC LIMIT 1`, (err, entry) => {
-          if (err) {
-            console.error(err.message);
-            return null;
-          }
-          console.log("Done");
-          dataEntry = entry.connectionStatus;
-          console.log(dataEntry)
-        });
-    });
-}
-
-getData();
-console.log(dataEntry);
-
-
-
-db.close((err) => {
-  if (err) {
-    console.error(err.message);
-  }
-  console.log('Close the database connection.');
-});
+// open the Database
+const filebuffer = fs.readFileSync('data.db');
+const db = new sql.Database(filebuffer);
+const contents = db.exec("SELECT * FROM telemetry");

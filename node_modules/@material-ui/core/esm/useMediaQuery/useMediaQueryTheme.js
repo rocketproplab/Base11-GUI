@@ -1,7 +1,5 @@
-import useMediaQuery from './useMediaQuery'; // TODO to deprecate in v4.x and remove in v5
+import useMediaQuery from './useMediaQuery'; // TODO v5: to deprecate in v4.x and remove in v5
 
-function useMediaQueryTheme() {
+export default function useMediaQueryTheme() {
   return useMediaQuery.apply(void 0, arguments);
 }
-
-export default useMediaQueryTheme;

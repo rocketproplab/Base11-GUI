@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-syntax */
-function getThemeProps(params) {
+export default function getThemeProps(params) {
   const {
     theme,
     name,
@@ -23,5 +23,3 @@ function getThemeProps(params) {
 
   return props;
 }
-
-export default getThemeProps;

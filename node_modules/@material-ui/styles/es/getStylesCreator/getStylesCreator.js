@@ -1,8 +1,7 @@
 import _extends from "@babel/runtime/helpers/esm/extends";
 import { deepmerge } from '@material-ui/utils';
 import noopTheme from './noopTheme';
-
-function getStylesCreator(stylesOrCreator) {
+export default function getStylesCreator(stylesOrCreator) {
   const themingEnabled = typeof stylesOrCreator === 'function';
 
   if (process.env.NODE_ENV !== 'production') {
@@ -50,5 +49,3 @@ function getStylesCreator(stylesOrCreator) {
     options: {}
   };
 }
-
-export default getStylesCreator;

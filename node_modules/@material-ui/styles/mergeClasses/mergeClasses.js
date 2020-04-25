@@ -5,7 +5,7 @@ var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefau
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports.default = mergeClasses;
 
 var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
 
@@ -47,6 +47,3 @@ function mergeClasses() {
   });
   return nextClasses;
 }
-
-var _default = mergeClasses;
-exports.default = _default;

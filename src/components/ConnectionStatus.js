@@ -1,27 +1,28 @@
 import React from 'react';
-require("@aws-sdk/eventstream-marshaller");
+
+var data = require("../data");
 
 const heartbeat = 1000;
-const sqlite3 = require('sqlite3').verbose();
-
-// open the database
-let db = new sqlite3.Database('./data.db', sqlite3.OPEN_READWRITE, (err) => {
-  if (err) {
-    console.error(err.message);
-  }
-  console.log('Connected to the telemetry database.');
-});
-
-var data = null;
-db.serialize(() => {
-	db.get(`SELECT * FROM telemetry ORDER BY timestamp DESC LIMIT 1`, (err, entry) => {
-	  if (err) {
-		console.error(err.message);
-		return null;
-	  }
-	  data = entry;
-	});
-});
+// const sqlite3 = require('sqlite3');
+// 
+// // open the database
+// let db = new sqlite3.Database('./data.db', sqlite3.OPEN_READWRITE, (err) => {
+//   if (err) {
+//     console.error(err.message);
+//   }
+//   console.log('Connected to the telemetry database.');
+// });
+// 
+// var data = null;
+// db.serialize(() => {
+// 	db.get(`SELECT * FROM telemetry ORDER BY timestamp DESC LIMIT 1`, (err, entry) => {
+// 	  if (err) {
+// 		console.error(err.message);
+// 		return null;
+// 	  }
+// 	  data = entry;
+// 	});
+// });
 
 export default class ConnectionStatus extends React.Component {
 	constructor(props) {
@@ -47,16 +48,16 @@ export default class ConnectionStatus extends React.Component {
 	}
 
 	tick() {
-		db.serialize(() => {
-			db.get(`SELECT * FROM telemetry ORDER BY timestamp DESC LIMIT 1`, (err, entry) => {
-			  if (err) {
-				console.error(err.message);
-				return null;
-			  }
-			  console.log("Fetched");
-			  data = entry;
-			});
-		});
+		// db.serialize(() => {
+		// 	db.get(`SELECT * FROM telemetry ORDER BY timestamp DESC LIMIT 1`, (err, entry) => {
+		// 	  if (err) {
+		// 		console.error(err.message);
+		// 		return null;
+		// 	  }
+		// 	  console.log("Fetched");
+		// 	  data = entry;
+		// 	});
+		// });
 	}
 
 	render () {

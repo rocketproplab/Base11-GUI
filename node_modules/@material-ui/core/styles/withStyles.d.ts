@@ -1,4 +1,4 @@
-import { PropInjector, CoerceEmptyInterface } from '@material-ui/types';
+import { PropInjector } from '@material-ui/types';
 import { Theme } from './createMuiTheme';
 import {
   CreateCSSProperties,
@@ -48,8 +48,5 @@ export default function withStyles<
   Props extends object = {}
 >(
   style: Styles<Theme, Props, ClassKey>,
-  options?: Options,
-): PropInjector<
-  WithStyles<ClassKey, Options['withTheme']>,
-  StyledComponentProps<ClassKey> & CoerceEmptyInterface<Props>
->;
+  options?: Options
+): PropInjector<WithStyles<ClassKey, Options['withTheme']>, StyledComponentProps<ClassKey> & Props>;

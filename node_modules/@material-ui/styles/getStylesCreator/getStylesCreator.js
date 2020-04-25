@@ -5,7 +5,7 @@ var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefau
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports.default = getStylesCreator;
 
 var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
 
@@ -61,6 +61,3 @@ function getStylesCreator(stylesOrCreator) {
     options: {}
   };
 }
-
-var _default = getStylesCreator;
-exports.default = _default;

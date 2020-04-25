@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports.default = getThemeProps;
 
 /* eslint-disable no-restricted-syntax */
 function getThemeProps(params) {
@@ -28,6 +28,3 @@ function getThemeProps(params) {
 
   return props;
 }
-
-var _default = getThemeProps;
-exports.default = _default;

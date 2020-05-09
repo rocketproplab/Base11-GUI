@@ -1,6 +1,6 @@
 {
 	"connectionStatus": 1,
-	"timestamp": 1587846786.1032598,
+	"timestamp": 1589051357.685677,
 	"PT1_ss": 0,
 	"PT1_readout": 0,
 	"PT2_ss": 0,
@@ -30,7 +30,7 @@
 	"yTilt": 0,
 	"Lat": 0,
 	"Lon": 0,
-	"FS": "3",
+	"FS": "",
 	"PS_drogue": 0,
 	"PS_main": 0,
 	"Vel": 0

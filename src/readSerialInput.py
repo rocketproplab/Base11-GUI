@@ -2,6 +2,7 @@ import sys
 import serial
 import time
 import json
+from threading import Thread
 
 # https://stackoverflow.com/questions/1093598/pyserial-how-to-read-the-last-line-sent-from-a-serial-device
 
@@ -26,8 +27,27 @@ def updateSpeedMetrics(curr_alt, curr_time):
     prev_time = clock
     clock = curr_time
 
+last_received = ''
+
+def receiving(ser):
+    global last_received
+
+    buffer_string = ''
+    while True:
+        buffer_string = buffer_string + str(ser.read(ser.inWaiting()))
+        if '\n' in buffer_string:
+            lines = buffer_string.split('\n') # Guaranteed to have at least 2 entries
+            last_received = lines[-2]
+            #If the Arduino sends lots of empty lines, you'll lose the
+            #last filled line, so you could make the above statement conditional
+            #like so: if lines[-2]: last_received = lines[-2]
+            buffer_string = lines[-1]
+
 def getData():
-    text = ser1.readline().strip()
+    Thread(target=receiving, args=(ser1,)).start()
+    
+    global last_received
+    text = last_received.strip()
     # while str(text[0:4]) != 'b\'PT1:\'':
     #     print("failed! string was " + str(text[0:3]))
     #     text = ser1.readline().strip()

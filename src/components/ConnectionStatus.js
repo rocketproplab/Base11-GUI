@@ -1,6 +1,5 @@
 import React from 'react';
 
-var data = require("../data");
 const URL = 'ws://localhost:8000';
 
 const heartbeat = 1000;

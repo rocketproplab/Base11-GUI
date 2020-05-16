@@ -2,15 +2,15 @@ import React from 'react';
 import './FlightStatus.css';
 
 const heartbeat = 1000;
-var data = require("../data");
+const URL = 'ws://localhost:8000';
 
 export default class FlightStatus extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			FS: data.FS,
-		}
+		this.state = {flightState: 0}
 	}
+	
+	ws = new WebSocket(URL)
 
 	statusStyle = {
 		fontFamily: "Helvetica",
@@ -19,20 +19,18 @@ export default class FlightStatus extends React.Component {
 	};
 	
 	componentDidMount() {
-		this.timerID = setInterval(
-			() => this.tick(),
-			heartbeat
-		);
-	}
-
-	componentWillUnmount() {
-		clearInterval(this.timerID);
-	}
-
-	tick() {
-		this.setState({
-			date: new Date()
-		});
+		this.ws.onopen = () => {
+      		console.log('flightstatus module connected')
+    	}
+		
+		this.ws.onmessage = evt => {
+			console.log("New flight state recieved!")
+			var newData = JSON.parse(evt.data)
+			console.log(newData)
+      		this.setState({
+				flightState: newData.FS
+			});
+    	};
 	}
 	
 	launchIndicator = function (status) {
@@ -99,12 +97,12 @@ export default class FlightStatus extends React.Component {
 		return (
 			<div style={this.statusStyle} className={'grid-container'}>
 				<p className={"not-completed"}>Flight State:</p>
-				{this.launchIndicator(this.state.FS)}
-				{this.climbIndicator(this.state.FS)}
-				{this.coastIndicator(this.state.FS)}
-				{this.apogeeIndicator(this.state.FS)}
-				{this.descentIndicator(this.state.FS)}
-				{this.landedIndicator(this.state.FS)}
+				{this.launchIndicator(this.state.flightState)}
+				{this.climbIndicator(this.state.flightState)}
+				{this.coastIndicator(this.state.flightState)}
+				{this.apogeeIndicator(this.state.flightState)}
+				{this.descentIndicator(this.state.flightState)}
+				{this.landedIndicator(this.state.flightState)}
 			</div>
 		);
 	}

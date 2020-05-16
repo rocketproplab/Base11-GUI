@@ -30,7 +30,7 @@
 	"yTilt": 0,
 	"Lat": 0,
 	"Lon": 0,
-	"FS": "",
+	"FS": 0,
 	"PS_drogue": 0,
 	"PS_main": 0,
 	"Vel": 0

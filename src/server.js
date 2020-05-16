@@ -1,4 +1,5 @@
 const WebSocket = require('ws');
+const dataFile = require("./data");
 
 const wss = new WebSocket.Server({ port: 8000 });
 
@@ -40,9 +41,21 @@ var data = {
     "Vel": 0
 };
 
+// wss.on('connection', function connection(ws) {
+//     console.log("Connected!");
+//     if (dataFile !== "") {
+//         wss.clients.forEach(function each(client) {
+//             client.send(JSON.stringify(dataFile));
+//         });
+//     }
+// });
+
 wss.on('connection', function connection(ws) {
     console.log("Connected!");
-    wss.clients.forEach(function each(client) {
-        client.send(JSON.stringify(data));
+    ws.on('message', function incoming(data) {
+        console.log("Data Recieved!")
+        wss.clients.forEach(function each(client) {
+            client.send(data);
+        });
     });
 });

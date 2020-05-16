@@ -8,11 +8,12 @@ arduino and the laptop being used.
 1. Clone the git repo using `git clone`
 2. Use `cd` to navigate to the project directory
 3. Run `npm install` in your CLI to install the necessary node modules
-4. Make sure you have python3 and sys, serial, time, and json installed. If you don't have a module, run `pip install [MODULE]`
+4. Make sure you have python3, sys, serial, time, json, and websockets installed. If you don't have a module, run `pip install [MODULE]`
 
 ## To start dashboard:
-1. Run `npm start` to start the project server. If it doesn't open in your default browser, go to `http://localhost:3000/`
-2. Run `cd src` in your CLI
+1. Open new terminal, navigate to src folder. Run `node server.js` to start websocket server.
+2. *In a new terminal*, run `npm start` to start the project server. If it doesn't open in your default browser, go to `http://localhost:3000/`
 3. Plug in the command box to your laptop's USB port
 4. Find the port it's connected to (use the Arduino app to do this, or `ls /dev/` on Terminal to tyr and narrow it down)
-5. Run `python realSerialInput.py --[serial port]` to start the data collection
+5. Open a third terminal and navigate to src again.
+6. Run `python fetchData.py [PORT]` after making sure (via Arduino IDE or something else) that the command box is printing the output listed in `dataTest/dataTest.ino`.

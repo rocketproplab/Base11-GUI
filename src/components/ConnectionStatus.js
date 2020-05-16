@@ -25,7 +25,6 @@ export default class ConnectionStatus extends React.Component {
     	}
 		
 		this.ws.onmessage = evt => {
-			console.log(JSON.parse(evt.data).connectionStatus);
       		this.setState({
 				connectionStatus: JSON.parse(evt.data).connectionStatus
 			});

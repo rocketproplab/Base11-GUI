@@ -10,5 +10,3 @@ wss.on('connection', function connection(ws) {
         client.send(JSON.stringify(data));
     });
 });
-
-// isUnique(data)

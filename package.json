@@ -13,6 +13,7 @@
     "serialport": "^8.0.7",
     "sql.js": "^1.2.2",
     "sqlite3": "^4.1.1",
+    "websocket": "^1.0.31",
     "write-json-file": "^4.3.0"
   },
   "scripts": {

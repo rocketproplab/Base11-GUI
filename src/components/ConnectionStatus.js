@@ -1,34 +1,17 @@
 import React from 'react';
 
 var data = require("../data");
+const URL = 'ws://localhost:8000';
 
 const heartbeat = 1000;
-// const sqlite3 = require('sqlite3');
-// 
-// // open the database
-// let db = new sqlite3.Database('./data.db', sqlite3.OPEN_READWRITE, (err) => {
-//   if (err) {
-//     console.error(err.message);
-//   }
-//   console.log('Connected to the telemetry database.');
-// });
-// 
-// var data = null;
-// db.serialize(() => {
-// 	db.get(`SELECT * FROM telemetry ORDER BY timestamp DESC LIMIT 1`, (err, entry) => {
-// 	  if (err) {
-// 		console.error(err.message);
-// 		return null;
-// 	  }
-// 	  data = entry;
-// 	});
-// });
 
 export default class ConnectionStatus extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {connectionStatus: data.connectionStatus}
+		this.state = {connectionStatus: 0}
 	}
+	
+	ws = new WebSocket(URL)
 
 	format = {
 		float: "right",
@@ -37,27 +20,16 @@ export default class ConnectionStatus extends React.Component {
 	};
 
 	componentDidMount() {
-		this.timerID = setInterval(
-			() => this.tick(),
-			heartbeat
-		);
-	}
-
-	componentWillUnmount() {
-		clearInterval(this.timerID);
-	}
-
-	tick() {
-		// db.serialize(() => {
-		// 	db.get(`SELECT * FROM telemetry ORDER BY timestamp DESC LIMIT 1`, (err, entry) => {
-		// 	  if (err) {
-		// 		console.error(err.message);
-		// 		return null;
-		// 	  }
-		// 	  console.log("Fetched");
-		// 	  data = entry;
-		// 	});
-		// });
+		this.ws.onopen = () => {
+      		console.log('connected')
+    	}
+		
+		this.ws.onmessage = evt => {
+			console.log(JSON.parse(evt.data).connectionStatus);
+      		this.setState({
+				connectionStatus: JSON.parse(evt.data).connectionStatus
+			});
+    	};
 	}
 
 	render () {

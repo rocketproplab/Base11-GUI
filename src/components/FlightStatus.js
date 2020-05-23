@@ -1,37 +1,12 @@
 import React from 'react';
 import './FlightStatus.css';
 
-const heartbeat = 1000;
-const URL = 'ws://localhost:8000';
-
 export default class FlightStatus extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {flightState: 0}
-	}
-	
-	ws = new WebSocket(URL)
-
 	statusStyle = {
 		fontFamily: "Helvetica",
 		marginTop: "20px",
 		fontSize: "20px"
 	};
-	
-	componentDidMount() {
-		this.ws.onopen = () => {
-      		console.log('flightstatus module connected')
-    	}
-		
-		this.ws.onmessage = evt => {
-			console.log("New flight state recieved!")
-			var newData = JSON.parse(evt.data)
-			console.log(newData)
-      		this.setState({
-				flightState: newData.FS
-			});
-    	};
-	}
 	
 	launchIndicator = function (status) {
 		if (status == 1) {
@@ -97,12 +72,12 @@ export default class FlightStatus extends React.Component {
 		return (
 			<div style={this.statusStyle} className={'grid-container'}>
 				<p className={"not-completed"}>Flight State:</p>
-				{this.launchIndicator(this.state.flightState)}
-				{this.climbIndicator(this.state.flightState)}
-				{this.coastIndicator(this.state.flightState)}
-				{this.apogeeIndicator(this.state.flightState)}
-				{this.descentIndicator(this.state.flightState)}
-				{this.landedIndicator(this.state.flightState)}
+				{this.launchIndicator(this.props.flightState)}
+				{this.climbIndicator(this.props.flightState)}
+				{this.coastIndicator(this.props.flightState)}
+				{this.apogeeIndicator(this.props.flightState)}
+				{this.descentIndicator(this.props.flightState)}
+				{this.landedIndicator(this.props.flightState)}
 			</div>
 		);
 	}

@@ -177,10 +177,12 @@ async def send_data():
             serial_port = serial.Serial(sys.argv[1], baudRate)
             # stringified_data = json.dumps(last_received)
             stringified_data = json.dumps(get_data_old(serial_port))
+            print(stringified_data)
             await websocket.send(stringified_data)
         else:
+            print("No Data!")
             empty_data = """{ "connectionStatus": 0,
-                "timestamp": time.time(),
+                "timestamp": 0,
                 "PT1_ss": 0,
                 "PT1_readout": 0,
                 "PT2_ss": 0,

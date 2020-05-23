@@ -8,29 +8,28 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
-const heartbeat = 1000;
-var data = require("../data");
+const URL = 'ws://localhost:8000';
 
 export default class PTView extends React.Component {
     constructor(props) {
 		super(props);
 		this.state = {
-            ss_1: data.PT1_ss,
-            ss_2: data.PT2_ss,
-            ss_3: data.PT3_ss,
-            ss_4: data.PT4_ss,
-            ss_5: data.PT5_ss,
-            ss_6: data.PT6_ss,
-            ss_7: data.PT7_ss,
-            ss_8: data.PT8_ss,
-            r1: data.PT1_readout,
-            r2: data.PT2_readout,
-            r3: data.PT3_readout,
-            r4: data.PT4_readout,
-            r5: data.PT5_readout,
-            r6: data.PT6_readout,
-            r7: data.PT7_readout,
-            r8: data.PT8_readout
+            ss_1: 0,
+            ss_2: 0,
+            ss_3: 0,
+            ss_4: 0,
+            ss_5: 0,
+            ss_6: 0,
+            ss_7: 0,
+            ss_8: 0,
+            r1: 0,
+            r2: 0,
+            r3: 0,
+            r4: 0,
+            r5: 0,
+            r6: 0,
+            r7: 0,
+            r8: 0
 		}
 
         this.rows = [
@@ -54,22 +53,36 @@ export default class PTView extends React.Component {
     divStyle = {
         marginLeft: "15px"
     };
+    
+    ws = new WebSocket(URL)
 
     componentDidMount() {
-		this.timerID = setInterval(
-			() => this.tick(),
-			heartbeat
-		);
-	}
-
-	componentWillUnmount() {
-		clearInterval(this.timerID);
-	}
-
-	tick() {
-		this.setState({
-			date: new Date()
-		});
+		this.ws.onopen = () => {
+      		console.log('pressure module connected')
+    	}
+		
+		this.ws.onmessage = evt => {
+			var newData = JSON.parse(evt.data)
+			console.log(newData)
+      		this.setState({
+                ss_1: newData.PT1_ss,
+                ss_2: newData.PT2_ss,
+                ss_3: newData.PT3_ss,
+                ss_4: newData.PT4_ss,
+                ss_5: newData.PT5_ss,
+                ss_6: newData.PT6_ss,
+                ss_7: newData.PT7_ss,
+                ss_8: newData.PT8_ss,
+                r1: newData.PT1_readout,
+                r2: newData.PT2_readout,
+                r3: newData.PT3_readout,
+                r4: newData.PT4_readout,
+                r5: newData.PT5_readout,
+                r6: newData.PT6_readout,
+                r7: newData.PT7_readout,
+                r8: newData.PT8_readout
+			});
+    	};
 	}
 
     createData = function (sensor, ss, readout) {

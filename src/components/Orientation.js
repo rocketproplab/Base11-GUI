@@ -7,17 +7,17 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 
-const heartbeat = 1000;
-var data = require("../data");
+const URL = 'ws://localhost:8000';
 
 export default class Orientation extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            xTilt: data.xTilt,
-            yTilt: data.yTilt
+            xTilt: 0,
+            yTilt: 0
         }
     }
+    
     cardStyle = {
         card: {
             minWidth: 275,
@@ -29,22 +29,22 @@ export default class Orientation extends React.Component {
             marginBottom: 12,
         },
     };
+    
+    ws = new WebSocket(URL)
 
     componentDidMount() {
-		this.timerID = setInterval(
-			() => this.tick(),
-			heartbeat
-		);
-	}
-
-	componentWillUnmount() {
-		clearInterval(this.timerID);
-	}
-
-	tick() {
-		this.setState({
-			date: new Date()
-		});
+		this.ws.onopen = () => {
+      		console.log('orientation module connected')
+    	}
+		
+		this.ws.onmessage = evt => {
+			var newData = JSON.parse(evt.data)
+			console.log(newData)
+      		this.setState({
+				xTilt: newData.xTilt,
+                yTilt: newData.yTilt
+			});
+    	};
 	}
 
     getRotation = function (xTilt, yTilt) {

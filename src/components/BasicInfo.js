@@ -7,15 +7,14 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 
-const heartbeat = 1000;
-var data = require("../data");
+const URL = 'ws://localhost:8000';
 
 export default class BasicInfo extends React.Component {
 	constructor(props) {
         super(props);
         this.state = {
-			alt: data.Alt,
-			vel: data.Velocity
+			alt: 0,
+			vel: 0
         }
     }
 
@@ -30,22 +29,22 @@ export default class BasicInfo extends React.Component {
             marginBottom: 12,
         },
     };
+	
+	ws = new WebSocket(URL)
 
-    componentDidMount() {
-		this.timerID = setInterval(
-			() => this.tick(),
-			heartbeat
-		);
-	}
-
-	componentWillUnmount() {
-		clearInterval(this.timerID);
-	}
-
-	tick() {
-		this.setState({
-			date: new Date()
-		});
+	componentDidMount() {
+		this.ws.onopen = () => {
+      		console.log('basicinfo module connected')
+    	}
+		
+		this.ws.onmessage = evt => {
+			var newData = JSON.parse(evt.data)
+			console.log(newData)
+      		this.setState({
+				alt: newData.Alt,
+				vel: newData.Vel
+			});
+    	};
 	}
 
     render () {

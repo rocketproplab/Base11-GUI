@@ -1,7 +1,6 @@
 import React from 'react';
 import './FlightStatus.css';
 
-const heartbeat = 1000;
 const URL = 'ws://localhost:8000';
 
 export default class FlightStatus extends React.Component {
@@ -24,7 +23,6 @@ export default class FlightStatus extends React.Component {
     	}
 		
 		this.ws.onmessage = evt => {
-			console.log("New flight state recieved!")
 			var newData = JSON.parse(evt.data)
 			console.log(newData)
       		this.setState({

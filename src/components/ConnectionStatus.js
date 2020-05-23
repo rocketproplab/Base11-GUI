@@ -2,8 +2,6 @@ import React from 'react';
 
 const URL = 'ws://localhost:8000';
 
-const heartbeat = 1000;
-
 export default class ConnectionStatus extends React.Component {
 	constructor(props) {
 		super(props);

@@ -1,15 +1,14 @@
 import React from 'react';
 
-const heartbeat = 1000;
-var data = require("../data");
+const URL = 'ws://localhost:8000';
 
 export default class ChuteStatus extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			DS: data.PS_drogue,
-			MS: data.PS_main,
-			FS: data.FS
+			drogueState: 0,
+			mainState: 0,
+			fState: 0
 		}
 
 	}
@@ -18,21 +17,22 @@ export default class ChuteStatus extends React.Component {
 		marginBottom: "10px"
 	};
 
+	ws = new WebSocket(URL)
+	
 	componentDidMount() {
-		this.timerID = setInterval(
-			() => this.tick(),
-			heartbeat
-		);
-	}
-
-	componentWillUnmount() {
-		clearInterval(this.timerID);
-	}
-
-	tick() {
-		this.setState({
-			date: new Date()
-		});
+		this.ws.onopen = () => {
+      		console.log('chutestatus module connected')
+    	}
+		
+		this.ws.onmessage = evt => {
+			var newData = JSON.parse(evt.data)
+			console.log(newData)
+      		this.setState({
+				drogueState: newData.PS_drogue,
+				mainState: newData.PS_main,
+				fState: newData.FS
+			});
+    	};
 	}
 	
 	drogueStatus = function(flightState, drogueState) {
@@ -63,8 +63,8 @@ export default class ChuteStatus extends React.Component {
 		return (
 			<div style={this.divStyle} className={'grid-container'}>
 				<p className={"not-completed"}>Parachutes:</p>
-				{this.drogueStatus(this.state.FS, this.state.DS)}
-				{this.mainStatus(this.state.FS, this.state.MS)}
+				{this.drogueStatus(this.state.fState, this.state.drogueState)}
+				{this.mainStatus(this.state.fState, this.state.mainState)}
 			</div>
 		);	
 	}

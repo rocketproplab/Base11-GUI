@@ -8,21 +8,20 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
-const heartbeat = 1000;
-var data = require("../data");
+const URL = 'ws://localhost:8000';
 
 export default class PTView extends React.Component {
     constructor(props) {
 		super(props);
 		this.state = {
-            t1: data.TC1,
-            t2: data.TC2,
-            t3: data.TC3,
-            t4: data.TC4,
-            t5: data.TC5,
-            t6: data.TC6,
-            t7: data.TC7,
-            t8: data.TC8
+            t1: 0,
+            t2: 0,
+            t3: 0,
+            t4: 0,
+            t5: 0,
+            t6: 0,
+            t7: 0,
+            t8: 0
 		}
 
         this.rows = [
@@ -46,22 +45,28 @@ export default class PTView extends React.Component {
     divStyle = {
         marginRight: "15px"
     };
+    
+    ws = new WebSocket(URL)
 
     componentDidMount() {
-		this.timerID = setInterval(
-			() => this.tick(),
-			heartbeat
-		);
-	}
-
-	componentWillUnmount() {
-		clearInterval(this.timerID);
-	}
-
-	tick() {
-		this.setState({
-			date: new Date()
-		});
+		this.ws.onopen = () => {
+      		console.log('temperature module connected')
+    	}
+		
+		this.ws.onmessage = evt => {
+			var newData = JSON.parse(evt.data)
+			console.log(newData)
+      		this.setState({
+                t1: newData.TC1,
+                t2: newData.TC2,
+                t3: newData.TC3,
+                t4: newData.TC4,
+                t5: newData.TC5,
+                t6: newData.TC6,
+                t7: newData.TC7,
+                t8: newData.TC8
+			});
+    	};
 	}
 
     createData = function (sensor, readout) {

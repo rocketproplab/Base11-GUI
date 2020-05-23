@@ -7,18 +7,8 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 
-const URL = 'ws://localhost:8000';
-
 export default class BasicInfo extends React.Component {
-	constructor(props) {
-        super(props);
-        this.state = {
-			alt: 0,
-			vel: 0
-        }
-    }
-
-    cardStyle = {
+	cardStyle = {
         card: {
             minWidth: 275,
         },
@@ -29,32 +19,15 @@ export default class BasicInfo extends React.Component {
             marginBottom: 12,
         },
     };
-	
-	ws = new WebSocket(URL)
-
-	componentDidMount() {
-		this.ws.onopen = () => {
-      		console.log('basicinfo module connected')
-    	}
-		
-		this.ws.onmessage = evt => {
-			var newData = JSON.parse(evt.data)
-			console.log(newData)
-      		this.setState({
-				alt: newData.Alt,
-				vel: newData.Vel
-			});
-    	};
-	}
 
     render () {
 		return (
 			<Card style={this.cardStyle}>
 	            <Typography variant="h5" component="h2" align="left" style={{marginLeft: '3%', marginTop: '4%'}}>
-	                Velocity: {this.state.vel} m/s
+	                Velocity: {this.props.vel} m/s
 	            </Typography>
 				<Typography variant="h5" component="h2" align="left" style={{marginLeft: '3%', marginBottom: '4%'}}>
-	                Altitude: {this.state.alt} m
+	                Altitude: {this.props.alt} m
 	            </Typography>
 	        </Card>
 		);

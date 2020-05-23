@@ -1,39 +1,10 @@
 import React from 'react';
 
-const URL = 'ws://localhost:8000';
-
 export default class ChuteStatus extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			drogueState: 0,
-			mainState: 0,
-			fState: 0
-		}
-
-	}
 	divStyle = {
 		marginRight: "42%",
 		marginBottom: "10px"
 	};
-
-	ws = new WebSocket(URL)
-	
-	componentDidMount() {
-		this.ws.onopen = () => {
-      		console.log('chutestatus module connected')
-    	}
-		
-		this.ws.onmessage = evt => {
-			var newData = JSON.parse(evt.data)
-			console.log(newData)
-      		this.setState({
-				drogueState: newData.PS_drogue,
-				mainState: newData.PS_main,
-				fState: newData.FS
-			});
-    	};
-	}
 	
 	drogueStatus = function(flightState, drogueState) {
 		if (drogueState == 1) {
@@ -63,8 +34,8 @@ export default class ChuteStatus extends React.Component {
 		return (
 			<div style={this.divStyle} className={'grid-container'}>
 				<p className={"not-completed"}>Parachutes:</p>
-				{this.drogueStatus(this.state.fState, this.state.drogueState)}
-				{this.mainStatus(this.state.fState, this.state.mainState)}
+				{this.drogueStatus(this.props.fState, this.props.drogueState)}
+				{this.mainStatus(this.props.fState, this.props.mainState)}
 			</div>
 		);	
 	}

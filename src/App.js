@@ -108,15 +108,22 @@ export default class App extends React.Component {
         return (
             <div>
                 <Header/>
-                <ConnectionStatus/>
-                <FlightStatus/>
+                <ConnectionStatus 
+                    connectionStatus={this.state.connectionStatus}/>
+                <FlightStatus
+                    flightState={this.state.flightState}/>
                 <div style={{marginLeft: '11px'}}>
                     <Grid container spacing={3}>
                         <Grid item xs={9}>
-                            <ChuteStatus/>
+                            <ChuteStatus 
+                                drogueState={this.state.drogueState} 
+                                mainState={this.state.mainState}
+                                fState={this.state.fState}/>
                         </Grid>
                         <Grid item xs={3}>
-                            <BasicInfo/>
+                            <BasicInfo 
+                                alt={this.state.alt} 
+                                vel={this.state.vel}/>
                         </Grid>
                     </Grid>
                 </div>
@@ -130,10 +137,14 @@ export default class App extends React.Component {
                 </Grid>
                 <Grid container spacing={3}>
                     <Grid item xs={8}>
-                        <MapView/>
+                        <MapView
+                            latitude={this.state.latitude}
+                            longitude={this.state.longitude}/>
                     </Grid>
                     <Grid item xs={4}>
-                        <Orientation/>
+                        <Orientation
+                            xTilt={this.state.xTilt}
+                            yTilt={this.state.yTilt}/>
                     </Grid>
                 </Grid>
     		</div>

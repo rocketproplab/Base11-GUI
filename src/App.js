@@ -129,10 +129,34 @@ export default class App extends React.Component {
                 </div>
                 <Grid container spacing={3}>
                     <Grid item xs={8}>
-                        <PTView/>
+                        <PTView
+                            PT1_ss = {this.state.ss_1}
+                            PT1_readout = {this.state.r1}
+                            PT2_ss = {this.state.ss_2}
+                            PT2_readout = {this.state.r2}
+                            PT3_ss = {this.state.ss_3}
+                            PT3_readout = {this.state.r3}
+                            PT4_ss = {this.state.ss_4}
+                            PT4_readout = {this.state.r4}
+                            PT5_ss = {this.state.ss_5}
+                            PT5_readout = {this.state.r5}
+                            PT6_ss = {this.state.ss_6}
+                            PT6_readout = {this.state.r6}
+                            PT7_ss = {this.state.ss_7}
+                            PT7_readout = {this.state.r7}
+                            PT8_ss = {this.state.ss_8}
+                            PT8_readout = {this.state.r8}/>
                     </Grid>
                     <Grid item xs={4}>
-                        <TCView/>
+                        <TCView
+                            TC1_readout = {this.state.t1}
+                            TC2_readout = {this.state.t2}
+                            TC3_readout = {this.state.t3}
+                            TC4_readout = {this.state.t4}
+                            TC5_readout = {this.state.t5}
+                            TC6_readout = {this.state.t6}
+                            TC7_readout = {this.state.t7}
+                            TC8_readout = {this.state.t8}/>
                     </Grid>
                 </Grid>
                 <Grid container spacing={3}>

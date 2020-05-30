@@ -6,7 +6,7 @@ import json
 import time
 from threading import Thread
 
-
+heartbeat = 1   # delay for loss of signal. ensure synced with rate of data on command box.
 
 baudRate = 115200
 last_received = ''
@@ -169,20 +169,17 @@ async def send_data():
         '''
         try:
             ser1 = serial.Serial(sys.argv[1], baudRate)
-            connected = True
-        except serial.serialutil.SerialException:
-            connected = False
-        
-        if connected:
             serial_port = serial.Serial(sys.argv[1], baudRate)
             # stringified_data = json.dumps(last_received)
             stringified_data = json.dumps(get_data_old(serial_port))
             print(stringified_data)
             await websocket.send(stringified_data)
-        else:
+        except serial.serialutil.SerialException:
+            time.sleep(heartbeat)
             print("No Data!")
-            empty_data = """{ "connectionStatus": 0,
-                "timestamp": 0,
+            empty_data = {
+                "connectionStatus": 0,
+                "timestamp": time.time(),
                 "PT1_ss": 0,
                 "PT1_readout": 0,
                 "PT2_ss": 0,
@@ -212,12 +209,13 @@ async def send_data():
                 "yTilt": 0,
                 "Lat": 0,
                 "Lon": 0,
-                "FS": data,
+                "FS": 0,
                 "PS_drogue": 0,
                 "PS_main": 0,
                 "Vel": 0
-            }"""
-            await websocket.send(empty_data)
+            }
+            await websocket.send(json.dumps(empty_data))
+            
         
 
 

@@ -26,8 +26,11 @@ export default class BasicInfo extends React.Component {
 	            <Typography variant="h5" component="h2" align="left" style={{marginLeft: '3%', marginTop: '4%'}}>
 	                Velocity: {this.props.vel} m/s
 	            </Typography>
-				<Typography variant="h5" component="h2" align="left" style={{marginLeft: '3%', marginBottom: '4%'}}>
+				<Typography variant="h5" component="h2" align="left" style={{marginLeft: '3%'}}>
 	                Altitude: {this.props.alt} m
+	            </Typography>
+				<Typography variant="h5" component="h2" align="left" style={{marginLeft: '3%', marginBottom: '4%'}}>
+	                Projected Alt: {this.props.projAlt} m
 	            </Typography>
 	        </Card>
 		);

@@ -38,7 +38,8 @@ var data = {
     "FS": 0,
     "PS_drogue": 0,
     "PS_main": 0,
-    "Vel": 0
+    "Vel": 0,
+    "ProjAlt": 0
 };
 
 // wss.on('connection', function connection(ws) {

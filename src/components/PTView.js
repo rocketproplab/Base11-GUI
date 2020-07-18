@@ -34,7 +34,7 @@ export default class PTView extends React.Component {
                     headerStyle: {
                         fontSize: '20px',
                         textAlign: 'center',
-                        backgroundColor: '#bdbdbd',
+                        backgroundColor: '#999999',
                         color: '#FFF'
                     },
                     cellStyle: {

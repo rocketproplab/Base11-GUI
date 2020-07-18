@@ -20,6 +20,7 @@ export default class App extends React.Component {
         this.state = {
             alt: 0,
 			vel: 0,
+            projAlt: 0,
             drogueState: 0,
 			mainState: 0,
 			flightState: 0,
@@ -68,6 +69,7 @@ export default class App extends React.Component {
       		this.setState({
                 alt: newData.Alt,
     			vel: newData.Vel,
+                projAlt: newData.ProjAlt,
                 drogueState: newData.PS_drogue,
     			mainState: newData.PS_main,
     			flightState: newData.FS,
@@ -123,7 +125,8 @@ export default class App extends React.Component {
                         <Grid item xs={3}>
                             <BasicInfo 
                                 alt={this.state.alt} 
-                                vel={this.state.vel}/>
+                                vel={this.state.vel}
+                                projAlt={this.state.projAlt}/>
                         </Grid>
                     </Grid>
                 </div>

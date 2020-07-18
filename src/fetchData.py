@@ -8,6 +8,18 @@ from threading import Thread
 
 heartbeat = 1   # delay for loss of signal. ensure synced with rate of data on command box.
 
+# storage and functions for velocity calculations
+y1 = 0 # current time altitude
+y0 = 0 # previous time altitude
+t1 = 1 # current timestamp
+t0 = 0 # previous timestamp
+velocity = lambda y1, y0, t1, t0: (y1-y0) / (t1-t0) # units are m/s
+
+R_e = 6.3781e6
+grav = lambda alt: 9.80665*(float((R_e / (R_e + alt)))**2)
+projAlt = lambda y1, y0, t1, t0: float(y1) + float((velocity(y1, y0, t1, t0)**2) / (2*grav(y1))) \
+if velocity(y1, y0, t1, t0) >=0 else float(y1)
+
 baudRate = 115200
 last_received = ''
 test_datastore = {
@@ -45,7 +57,8 @@ test_datastore = {
     "FS": 4,
     "PS_drogue": 0,
     "PS_main": 0,
-    "Vel": 0
+    "Vel": 0,
+    "ProjAlt": 0
 };
 
 def receiving(ser):
@@ -63,16 +76,25 @@ def receiving(ser):
             buffer_string = lines[-1]
 
 def get_data_old(serial_port):
+    global y1, y0, t1, t0
     text = serial_port.readline().strip()
     while str(text[0:4]) != 'b\'PT1:\'':
         print("failed! string was " + str(text[0:3]))
         text = serial_port.readline().strip()
     # f.write(str(text) + "\n")
     data = str(text)[2:-1].split(';')
-        
+    
+    # update velocity and projection metrics
+    currTime = time.time()
+    t0 = t1
+    t1 = currTime
+    currAlt = float(data[16].split(":")[1])
+    y0 = y1
+    y1 = currAlt
+    
     datastore = {
         "connectionStatus": 1,
-        "timestamp": time.time(),
+        "timestamp": currTime,
         "PT1_ss": int(data[0].split(":")[1].split(",")[0]),
         "PT1_readout": float(data[0].split(":")[1].split(",")[1]),
         "PT2_ss": int(data[1].split(":")[1].split(",")[0]),
@@ -97,7 +119,7 @@ def get_data_old(serial_port):
         "TC6": float(data[13].split(":")[1]),
         "TC7": float(data[14].split(":")[1]),
         "TC8": float(data[15].split(":")[1]),
-        "Alt": float(data[16].split(":")[1]),
+        "Alt": currAlt,
         "xTilt": float(data[17].split(":")[1].split(",")[0]),
         "yTilt": float(data[17].split(":")[1].split(",")[1]),
         "Lat": float(data[18].split(":")[1].split(",")[0]),
@@ -105,56 +127,57 @@ def get_data_old(serial_port):
         "FS": int(data[19].split(":")[1]),
         "PS_drogue": int(data[20].split(":")[1].split(",")[0]),
         "PS_main": int(data[20].split(":")[1].split(",")[1]),
-        "Vel": 0
+        "Vel": round(velocity(y1, y0, t1, t0),2),
+        "ProjAlt": round(projAlt(y1, y0, t1, t0),1)
     }
     print(datastore['FS'])
     return datastore
 
-def get_data(serial_port):
-    global last_received
-    
-    Thread(target=receiving, args=(serial_port,)).start()
-    time.sleep(5)
-    data = str(last_received)[2:-1].split(';')
-    print(data)
-    datastore = {
-        "connectionStatus": 1,
-        "timestamp": time.time(),
-        "PT1_ss": data[0].split(":")[1].split(",")[0],
-        "PT1_readout": data[0].split(":")[1].split(",")[1],
-        "PT2_ss": data[1].split(":")[1].split(",")[0],
-        "PT2_readout": data[1].split(":")[1].split(",")[1],
-        "PT3_ss": data[2].split(":")[1].split(",")[0],
-        "PT3_readout": data[2].split(":")[1].split(",")[1],
-        "PT4_ss": data[3].split(":")[1].split(",")[0],
-        "PT4_readout": data[3].split(":")[1].split(",")[1],
-        "PT5_ss": data[4].split(":")[1].split(",")[0],
-        "PT5_readout": data[4].split(":")[1].split(",")[1],
-        "PT6_ss": data[5].split(":")[1].split(",")[0],
-        "PT6_readout": data[5].split(":")[1].split(",")[1],
-        "PT7_ss": data[6].split(":")[1].split(",")[0],
-        "PT7_readout": data[6].split(":")[1].split(",")[1],
-        "PT8_ss": data[7].split(":")[1].split(",")[0],
-        "PT8_readout": data[7].split(":")[1].split(",")[1],
-        "TC1": data[8].split(":")[1],
-        "TC2": data[9].split(":")[1],
-        "TC3": data[10].split(":")[1],
-        "TC4": data[11].split(":")[1],
-        "TC5": data[12].split(":")[1],
-        "TC6": data[13].split(":")[1],
-        "TC7": data[14].split(":")[1],
-        "TC8": data[15].split(":")[1],
-        "Alt": data[16].split(":")[1],
-        "xTilt": data[17].split(":")[1].split(",")[0],
-        "yTilt": data[17].split(":")[1].split(",")[1],
-        "Lat": data[18].split(":")[1].split(",")[0],
-        "Lon": data[18].split(":")[1].split(",")[1],
-        "FS": data[19].split(":")[1],
-        "PS_drogue": data[20].split(":")[1].split(",")[0],
-        "PS_main": data[20].split(":")[1].split(",")[1],
-        "Vel": 0
-    }
-    return datastore
+# def get_data(serial_port):
+#     global last_received
+# 
+#     Thread(target=receiving, args=(serial_port,)).start()
+#     time.sleep(5)
+#     data = str(last_received)[2:-1].split(';')
+#     print(data)
+#     datastore = {
+#         "connectionStatus": 1,
+#         "timestamp": time.time(),
+#         "PT1_ss": data[0].split(":")[1].split(",")[0],
+#         "PT1_readout": data[0].split(":")[1].split(",")[1],
+#         "PT2_ss": data[1].split(":")[1].split(",")[0],
+#         "PT2_readout": data[1].split(":")[1].split(",")[1],
+#         "PT3_ss": data[2].split(":")[1].split(",")[0],
+#         "PT3_readout": data[2].split(":")[1].split(",")[1],
+#         "PT4_ss": data[3].split(":")[1].split(",")[0],
+#         "PT4_readout": data[3].split(":")[1].split(",")[1],
+#         "PT5_ss": data[4].split(":")[1].split(",")[0],
+#         "PT5_readout": data[4].split(":")[1].split(",")[1],
+#         "PT6_ss": data[5].split(":")[1].split(",")[0],
+#         "PT6_readout": data[5].split(":")[1].split(",")[1],
+#         "PT7_ss": data[6].split(":")[1].split(",")[0],
+#         "PT7_readout": data[6].split(":")[1].split(",")[1],
+#         "PT8_ss": data[7].split(":")[1].split(",")[0],
+#         "PT8_readout": data[7].split(":")[1].split(",")[1],
+#         "TC1": data[8].split(":")[1],
+#         "TC2": data[9].split(":")[1],
+#         "TC3": data[10].split(":")[1],
+#         "TC4": data[11].split(":")[1],
+#         "TC5": data[12].split(":")[1],
+#         "TC6": data[13].split(":")[1],
+#         "TC7": data[14].split(":")[1],
+#         "TC8": data[15].split(":")[1],
+#         "Alt": data[16].split(":")[1],
+#         "xTilt": data[17].split(":")[1].split(",")[0],
+#         "yTilt": data[17].split(":")[1].split(",")[1],
+#         "Lat": data[18].split(":")[1].split(",")[0],
+#         "Lon": data[18].split(":")[1].split(",")[1],
+#         "FS": data[19].split(":")[1],
+#         "PS_drogue": data[20].split(":")[1].split(",")[0],
+#         "PS_main": data[20].split(":")[1].split(",")[1],
+#         "Vel": 0
+#     }
+#     return datastore
 
 async def send_data():
     """

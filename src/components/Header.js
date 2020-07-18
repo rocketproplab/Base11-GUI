@@ -47,7 +47,7 @@ export default class Header extends React.Component {
         			<img src={require("../imgs/RPL-logo.png")} height="65px" width="175px"></img>
       			</span>
       			<span style={{textAlign: "center", display: "table", margin: "auto", alignContent: "center", paddingTop: "30px", marginTop: "0px", fontSize: "20px"}}>
-        			Base-11 Telemetry Dashboard
+        			Marginal Stability Telemetry Dashboard
       			</span>
     		</div>
 		);

@@ -10,7 +10,7 @@
     "material-table": "^1.58.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "^3.4.1",
+    "react-scripts": "^5.0.1",
     "serialport": "^8.0.7",
     "sql.js": "^1.2.2",
     "sqlite3": "^4.1.1",
